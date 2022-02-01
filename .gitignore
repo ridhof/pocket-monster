@@ -32,3 +32,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+Requirement.md
+pages/old.js
+package-lock.json
