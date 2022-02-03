@@ -5,8 +5,7 @@ import { WildList } from '../components/wild'
 import { MyPocketList } from '../components/my'
 import { NavMenu } from '../components/menu'
 import styled from '@emotion/styled'
-import { useState } from "react"
-import { useEffect } from 'react/cjs/react.development'
+import { useState, useEffect } from "react"
 
 export default function Home() {
   const DesktopContainer = styled.div`
