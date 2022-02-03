@@ -2,8 +2,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { WildList } from '../components/wild'
+import { MyPocketList } from '../components/my'
 import { NavMenu } from '../components/menu'
 import styled from '@emotion/styled'
+import { useState } from "react"
+import { useEffect } from 'react/cjs/react.development'
 
 export default function Home() {
   const DesktopContainer = styled.div`
@@ -22,17 +25,17 @@ export default function Home() {
     max-width: 28rem;
   `
 
+  const [selectedMenu, setSelectedMenu] = useState('wild')
+  useEffect(() => {
+    setSelectedMenu('wild')
+  }, [])
   return (
-    // <div style={{ backgroundColor: 'yellow', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    //   <div style={{ backgroundColor: 'red', minHeight: '100vh', width: '100%', maxWidth: '40rem' }}>
-    //     <WildList />
-    //   </div>
-    // </div>
-
     <DesktopContainer>
       <MobileContainer>
-        <WildList />
-        <NavMenu />
+        {
+          selectedMenu == 'wild' ? <WildList /> : <MyPocketList />
+        }
+        <NavMenu selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       </MobileContainer>
     </DesktopContainer>
   )

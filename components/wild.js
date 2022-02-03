@@ -50,6 +50,23 @@ const Avatar = styled.img`
   border-radius: 9999px;
 `
 
+const LoadingContainer = styled.svg`
+  height: 1rem;
+  width: 1rem;
+  color: inherit;
+  border-radius: 9999px;
+
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`
+
 const TextContainer = styled.div`
   padding: 0.5vh 0;
   width: 100%;
@@ -65,19 +82,20 @@ const Text = styled.p`
 function WildList() {
   const [pokemons, setPokemons] = useState([])
   const [fetchUrl, setFetchUrl] = useState('https://pokeapi.co/api/v2/pokemon?limit=5&offset=0')
+  const [disabledButton, setDisableButton] = useState(false)
   const fetchPokemons = async () => {
+    setDisableButton(true)
     try {
       const fetchResult = await fetch(fetchUrl)
       const jsonResult = await fetchResult.json()
       if (jsonResult.next) setFetchUrl(jsonResult.next)
       if (pokemons.length == 0) setPokemons(jsonResult.results)
       else {
-        // let pokemonTemp = pokemons
-        // pokemonTemp = pokemonTemp.concat(jsonResult.results)
-        // console.log(pokemonTemp)
         setPokemons(pokemons.concat(jsonResult.results))
       }
+      setDisableButton(false)
     } catch (err) {
+      setDisableButton(false)
       console.log(err)
     }
   }
@@ -111,21 +129,18 @@ function WildList() {
       }
       {
         pokemons.length > 0 ?
-          <Button onClick={fetchPokemons}>Load More</Button> : ''
+          <Button onClick={fetchPokemons} disabled={disabledButton}>
+            {
+              disabledButton ?
+                <LoadingContainer>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </LoadingContainer> : 'Load More'
+            }
+          </Button> : ''
       }
-      {/* <nav>
-        <input placeholder="Search..." />
-        <div href="/">
-          <a>Home</a>
-        </div>
-        <div href="/about">
-          <a>About</a>
-        </div>
-        <div href="/contact">
-          <a>Contact</a>
-        </div>
-        <Button>Hi !</Button>
-      </nav> */}
     </ListContainer>
   )
 }
