@@ -20,7 +20,6 @@ const Button = styled.button`
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2vh 2vw;
   row-gap: 0.75rem;
 `
 
@@ -108,7 +107,6 @@ function WildList() {
       setFetchUrl('https://pokeapi.co/api/v2/pokemon?limit=5&offset=0')
       fetchPokemons()
     }
-    console.log(pokemons, fetchUrl)
   }, [pokemons])
   return (
     <ListContainer>

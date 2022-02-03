@@ -23,6 +23,7 @@ export default function Home() {
     min-height: 100vh;
     width: 100%;
     max-width: 28rem;
+    padding: 2vh 2vw;
   `
 
   const [selectedMenu, setSelectedMenu] = useState('wild')
