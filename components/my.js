@@ -58,7 +58,7 @@ const EditButtonContainer = styled.button`
   }
 `
 
-function MyPocketList() {
+function MyPocketList({ setSelectedPokemon }) {
   return (
     <ListContainer>
       <CardProfile>
@@ -80,7 +80,7 @@ function MyPocketList() {
       </CardProfile>
 
       <p>My Pocket:</p>
-      <WildList />
+      <WildList setSelectedPokemon={setSelectedPokemon} />
     </ListContainer>
   )
 }

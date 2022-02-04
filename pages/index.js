@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { WildList } from '../components/wild'
 import { MyPocketList } from '../components/my'
+import { PokemonProfile } from '../components/profile'
 import { NavMenu } from '../components/menu'
 import styled from '@emotion/styled'
 import { useState, useEffect } from "react"
@@ -22,10 +23,14 @@ export default function Home() {
     min-height: 100vh;
     width: 100%;
     max-width: 28rem;
+  `
+
+  const MenuContainer = styled.div`
     padding: 2vh 2vw;
   `
 
   const [selectedMenu, setSelectedMenu] = useState('wild')
+  const [selectedPokemon, setSelectedPokemon] = useState(null)
   useEffect(() => {
     setSelectedMenu('wild')
   }, [])
@@ -33,9 +38,16 @@ export default function Home() {
     <DesktopContainer>
       <MobileContainer>
         {
-          selectedMenu == 'wild' ? <WildList /> : <MyPocketList />
+          selectedPokemon ? 
+            <PokemonProfile setSelectedPokemon={setSelectedPokemon} /> :
+            <MenuContainer>
+              {
+                selectedMenu == 'wild' ?
+                  <WildList setSelectedPokemon={setSelectedPokemon} /> : <MyPocketList setSelectedPokemon={setSelectedPokemon} />
+              }
+              <NavMenu selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+            </MenuContainer>
         }
-        <NavMenu selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       </MobileContainer>
     </DesktopContainer>
   )
